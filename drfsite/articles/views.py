@@ -1,6 +1,9 @@
-from django.http import HttpResponse
-from django.shortcuts import render
+from rest_framework.response import Response
+from rest_framework.viewsets import ModelViewSet
+from .models import Article
+from .serializers import ArticlesSerializer
 
 
-def index(request):
-    return HttpResponse('Here-here, but soon.')
+class ArticlesViewSet(ModelViewSet):
+    queryset = Article.objects.all()
+    serializer_class = ArticlesSerializer

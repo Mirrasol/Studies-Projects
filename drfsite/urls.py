@@ -18,8 +18,8 @@ from django.contrib import admin
 from django.urls import path, include
 from drfsite import views
 
+
 urlpatterns = [
     path('', views.index),
-    path('articles/', include('drfsite.articles.urls')),
     path('admin/', admin.site.urls),
 ]
