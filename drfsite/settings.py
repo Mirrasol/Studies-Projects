@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'drfsite',
     'drfsite.articles.apps.ArticlesConfig',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [

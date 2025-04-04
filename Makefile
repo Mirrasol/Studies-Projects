@@ -11,4 +11,4 @@ migrate:
 	uv run python manage.py migrate
 
 lint:
-	uv run flake8 drfsite
+	uv run ruff check drfsite
