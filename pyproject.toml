@@ -15,4 +15,5 @@ dependencies = [
 [tool.uv]
 dev-dependencies = [
     "flake8>=7.1.2",
+    "ruff>=0.11.3",
 ]
