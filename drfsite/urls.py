@@ -16,10 +16,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+
 from drfsite import views
+from drfsite.articles.views import ArticlesAPIView
 
 
 urlpatterns = [
     path('', views.index),
+    path('api/v1/articleslist/', ArticlesAPIView.as_view()),
     path('admin/', admin.site.urls),
 ]
