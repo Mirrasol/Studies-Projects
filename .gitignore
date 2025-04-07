@@ -13,7 +13,6 @@ dist/
 coverage/
 test-coverage-tool
 coverage.xml
-.pytest_cache/
 *.sqlite3
 htmlcov/
 .vscode/
