@@ -1,7 +1,7 @@
 [project]
 name = "drfsite"
 version = "0.1.0"
-description = "Add your description here"
+description = "A DRF blog for practice"
 authors = [
     {name = "Helen Dobruk", email = "elena.dobruk@yandex.ru"},
 ]
