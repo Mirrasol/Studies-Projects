@@ -1,33 +1,78 @@
 # from django.forms import model_to_dict
-from rest_framework import generics
+# from rest_framework import generics
+from rest_framework import mixins, viewsets
+from rest_framework.decorators import action
 from rest_framework.response import Response
-from rest_framework.views import APIView
+# from rest_framework.views import APIView
 
-from .models import Article
+from .models import Article, Category
 from .serializers import ArticlesSerializer
 
 
-# ----------------------------------------------------------------------------
+# Lesson 9.
+# Routers.
+class ArticlesViewSet(mixins.CreateModelMixin,
+                            mixins.RetrieveModelMixin,
+                            mixins.UpdateModelMixin,
+                            mixins.ListModelMixin,
+                            viewsets.GenericViewSet):
+#   queryset = Article.objects.all()
+    serializer_class = ArticlesSerializer
+
+    def get_queryset(self):  # когда надо переопределять для сложных запросов в бд, убирая queryset
+        pk = self.kwargs.get("pk")
+        if not pk:
+            return Article.objects.all()[:3]
+        return Article.objects.filter(pk=pk)
+
+    @action(methods=['get'], detail=True)
+    def category(self, request, pk=None):
+        categories = Category.objects.get(pk=pk)
+        return Response({'categories': categories.name})
+
+# декоратор на список записей:
+#     @action(methods=['get'], detail=False)  # True = одна запись, False = список записей
+#     def category(self, request):  # имя метода задает имя маршрута
+#         categories = Category.objects.all()
+#         return Response({'categories': [c.name for c in categories]})
+#
+# ---------------------------------------------------------------------------------------
+# Lesson 8.
+# Viewsets, ModelViewSets.
+# class ArticlesViewSet(viewsets.ReadOnlyModelViewSet):
+#     queryset = Article.objects.all()
+#     serializer_class = ArticlesSerializer
+#
+# аналог с миксинами.
+# class ArticlesMixinsViewSet(mixins.CreateModelMixin,
+#                             mixins.RetrieveModelMixin,
+#                             mixins.UpdateModelMixin,
+#                             mixins.ListModelMixin,
+#                             viewsets.GenericViewSet):
+#     queryset = Article.objects.all()
+#     serializer_class = ArticlesSerializer
+#
+# ---------------------------------------------------------------------------------------
 # Lesson 7.
 # UpdateAPIView, RetrieveUpdateDestroyAPIView.
-class ArticlesAPIUpdate(generics.UpdateAPIView):
-    queryset = Article.objects.all()  # ленивый запрос => выберутся не все записи, а только нужные
-    serializer_class = ArticlesSerializer
-
-
-class ArticlesAPIDetailView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Article.objects.all()
-    serializer_class = ArticlesSerializer
-
-# ----------------------------------------------------------------------------
-# Lesson 6.
-# ModelSerializer, ListCreateAPIView = методы GET + POST.
-class ArticlesAPIList(generics.ListCreateAPIView):
-    queryset = Article.objects.all()  # ссылается на список записей, кот. возвращаем клиенту
-    serializer_class = ArticlesSerializer
-
-
-# -----------------------------------------------------------------------------
+# class ArticlesAPIUpdate(generics.UpdateAPIView):
+#     queryset = Article.objects.all()  # ленивый запрос => выберутся не все записи, а только нужные
+#     serializer_class = ArticlesSerializer
+#
+#
+# class ArticlesAPIDetailView(generics.RetrieveUpdateDestroyAPIView):
+#     queryset = Article.objects.all()
+#     serializer_class = ArticlesSerializer
+#
+# # -------------------------------------------------------------------------------------
+# # Lesson 6.
+# # ModelSerializer, ListCreateAPIView = методы GET + POST.
+# class ArticlesAPIList(generics.ListCreateAPIView):
+#     queryset = Article.objects.all()  # ссылается на список записей, кот. возвращаем клиенту
+#     serializer_class = ArticlesSerializer
+#
+#
+# # -------------------------------------------------------------------------------------
 # Lesson 5.
 # Methods save/update/create.
 # class ArticlesAPIView(APIView):
@@ -70,7 +115,7 @@ class ArticlesAPIList(generics.ListCreateAPIView):
 #
 #         return Response({"post": "delete post " + str(pk)})
 #
-# # -------------------------------------------------------------------------------
+# # -------------------------------------------------------------------------------------
 # Lesson 4.
 # class ArticlesAPIView(APIView):
 #     def get(self, request):
@@ -88,7 +133,7 @@ class ArticlesAPIList(generics.ListCreateAPIView):
 #         )
 #         return Response({'post': ArticlesSerializer(post_new).data})
 #
-# ------------------------------------------------------------------------------
+# ---------------------------------------------------------------------------------------
 # Lesson 3.
 # Учим базовый класс вьюх - APIView: без сериализаторов.
 # class ArticlesAPIView(APIView):
@@ -104,7 +149,7 @@ class ArticlesAPIList(generics.ListCreateAPIView):
 #         )
 #         return Response({'post': model_to_dict(post_new)})
 #
-# ------------------------------------------------------------------------------
+# ---------------------------------------------------------------------------------------
 # Lesson 2.
 # Смотрим пример того, как можно быстро писать вьюхи.
 # class ArticlesAPIView(generics.ListAPIView):
