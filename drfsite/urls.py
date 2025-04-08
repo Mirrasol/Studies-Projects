@@ -18,11 +18,12 @@ from django.contrib import admin
 from django.urls import path
 
 from drfsite import views
-from drfsite.articles.views import ArticlesAPIView
+from drfsite.articles.views import *
 
 
 urlpatterns = [
     path('', views.index),
-    path('api/v1/articleslist/', ArticlesAPIView.as_view()),
+    path('api/v1/articleslist/', ArticlesAPIList.as_view()),
+    path('api/v1/articleslist/<int:pk>/', ArticlesAPIList.as_view()),
     path('admin/', admin.site.urls),
 ]
