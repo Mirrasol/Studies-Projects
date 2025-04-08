@@ -24,6 +24,7 @@ from drfsite.articles.views import *
 urlpatterns = [
     path('', views.index),
     path('api/v1/articleslist/', ArticlesAPIList.as_view()),
-    path('api/v1/articleslist/<int:pk>/', ArticlesAPIList.as_view()),
+    path('api/v1/articleslist/<int:pk>/', ArticlesAPIUpdate.as_view()),
+    path('api/v1/articlesdetail/<int:pk>/', ArticlesAPIDetailView.as_view()),
     path('admin/', admin.site.urls),
 ]

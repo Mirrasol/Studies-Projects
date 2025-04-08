@@ -8,6 +8,18 @@ from .serializers import ArticlesSerializer
 
 
 # ----------------------------------------------------------------------------
+# Lesson 7.
+# UpdateAPIView, RetrieveUpdateDestroyAPIView.
+class ArticlesAPIUpdate(generics.UpdateAPIView):
+    queryset = Article.objects.all()  # ленивый запрос => выберутся не все записи, а только нужные
+    serializer_class = ArticlesSerializer
+
+
+class ArticlesAPIDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Article.objects.all()
+    serializer_class = ArticlesSerializer
+
+# ----------------------------------------------------------------------------
 # Lesson 6.
 # ModelSerializer, ListCreateAPIView = методы GET + POST.
 class ArticlesAPIList(generics.ListCreateAPIView):
