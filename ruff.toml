@@ -12,7 +12,7 @@ exclude = [
     "alembic",
 ]
 
-line-length = 120
+line-length = 200
 
 [lint.per-file-ignores]
   # init modules can contain the local imports, logic, unused imports

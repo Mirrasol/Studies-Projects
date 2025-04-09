@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'drfsite',
     'drfsite.articles.apps.ArticlesConfig',
     'rest_framework',
+    'rest_framework.authtoken',  # чтобы DRF использовал свою стандартную таблицу для авторизации по токенам => нужна миграция
+    'djoser',
 ]
 
 MIDDLEWARE = [
@@ -130,6 +132,11 @@ REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': [
         'rest_framework.renderers.JSONRenderer',
         'rest_framework.renderers.BrowsableAPIRenderer',
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.BasicAuthentication',  # стоят по умолч.
+        'rest_framework.authentication.SessionAuthentication',  # стоят по умолч.
     ],
     # 'DEFAULT_PERMISSION_CLASSES': [
     #     'rest_framework.permissions.IsAuthenticatedOrReadOnly',

@@ -15,17 +15,20 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import include, path, re_path
+
 # from rest_framework import routers
-
-from drfsite import views
-from drfsite.articles.views import *
-
+# from drfsite import views
+# from drfsite.articles.views import *
+from drfsite.articles.views import ArticlesAPIDestroy, ArticlesAPIList, ArticlesAPIUpdate
 
 urlpatterns = [
     path('api/v1/articles/', ArticlesAPIList.as_view()),
+#    path('api/v1/drf-auth/', include('rest_framework.urls')),  # для сессий и кук
     path('api/v1/articles/<int:pk>/', ArticlesAPIUpdate.as_view()),
     path('api/v1/articlesdelete/<int:pk>/', ArticlesAPIDestroy.as_view()),
+    path('api/v1/auth/', include('djoser.urls')),  # Djoser
+    re_path(r'^auth/', include('djoser.urls.authtoken')),  # Djoser
     path('admin/', admin.site.urls),
 ]
 
@@ -69,7 +72,7 @@ urlpatterns = [
 #     path('api/v1/articleslist/<int:pk>/', ArticlesViewSet.as_view({'put': 'update'})),
 #     path('admin/', admin.site.urls),
 # ]
-#----------------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------------------
 # Lesson 7.
 # urlpatterns = [
 #     path('', views.index),
