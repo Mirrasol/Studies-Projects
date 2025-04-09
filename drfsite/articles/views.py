@@ -1,35 +1,58 @@
 # from django.forms import model_to_dict
-# from rest_framework import generics
-from rest_framework import mixins, viewsets
-from rest_framework.decorators import action
-from rest_framework.response import Response
+from rest_framework import generics
+# from rest_framework import mixins, viewsets
+# from rest_framework.decorators import action
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
+# from rest_framework.response import Response
 # from rest_framework.views import APIView
 
-from .models import Article, Category
+from .models import Article
+# from .models import Category
+from .permissions import CustomIsAdminOrReadOnly, CustomIsOwnerOrReadOnly
 from .serializers import ArticlesSerializer
 
 
+# Lesson 10.
+# Permissions.
+class ArticlesAPIList(generics.ListCreateAPIView):
+    queryset = Article.objects.all()
+    serializer_class = ArticlesSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
+
+
+class ArticlesAPIUpdate(generics.RetrieveUpdateAPIView):
+    queryset = Article.objects.all()
+    serializer_class = ArticlesSerializer
+    permission_classes = [CustomIsOwnerOrReadOnly]
+
+
+class ArticlesAPIDestroy(generics.RetrieveDestroyAPIView):
+    queryset = Article.objects.all()
+    serializer_class = ArticlesSerializer
+    permission_classes = [CustomIsAdminOrReadOnly]
+
+# ---------------------------------------------------------------------------------------
 # Lesson 9.
 # Routers.
-class ArticlesViewSet(mixins.CreateModelMixin,
-                            mixins.RetrieveModelMixin,
-                            mixins.UpdateModelMixin,
-                            mixins.ListModelMixin,
-                            viewsets.GenericViewSet):
-#   queryset = Article.objects.all()
-    serializer_class = ArticlesSerializer
-
-    def get_queryset(self):  # когда надо переопределять для сложных запросов в бд, убирая queryset
-        pk = self.kwargs.get("pk")
-        if not pk:
-            return Article.objects.all()[:3]
-        return Article.objects.filter(pk=pk)
-
-    @action(methods=['get'], detail=True)
-    def category(self, request, pk=None):
-        categories = Category.objects.get(pk=pk)
-        return Response({'categories': categories.name})
-
+# class ArticlesViewSet(mixins.CreateModelMixin,
+#                             mixins.RetrieveModelMixin,
+#                             mixins.UpdateModelMixin,
+#                             mixins.ListModelMixin,
+#                             viewsets.GenericViewSet):
+# #   queryset = Article.objects.all()
+#     serializer_class = ArticlesSerializer
+#
+#     def get_queryset(self):  # когда надо переопределять для сложных запросов в бд, убирая queryset
+#         pk = self.kwargs.get("pk")
+#         if not pk:
+#             return Article.objects.all()[:3]
+#         return Article.objects.filter(pk=pk)
+#
+#     @action(methods=['get'], detail=True)
+#     def category(self, request, pk=None):
+#         categories = Category.objects.get(pk=pk)
+#         return Response({'categories': categories.name})
+#
 # декоратор на список записей:
 #     @action(methods=['get'], detail=False)  # True = одна запись, False = список записей
 #     def category(self, request):  # имя метода задает имя маршрута

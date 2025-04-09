@@ -7,13 +7,21 @@ from rest_framework import serializers
 from .models import Article
 
 
-# Lesson 6.
-# ModelSerializer, ListCreateAPIView.
+# Lesson 10.
+# Permissions.
 class ArticlesSerializer(serializers.ModelSerializer):
+    author = serializers.HiddenField(default=serializers.CurrentUserDefault())  # связываем автора с текущим юзером и скрываем это поле
     class Meta:
         model = Article
-        fields = ["name", "body", "category"]  # можно в кортеже, можно "__all__"
+        fields = ["name", "body", "author", "category"]  # можно в кортеже, можно "__all__"
 
+# Lesson 6.
+# ModelSerializer, ListCreateAPIView.
+# class ArticlesSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Article
+#         fields = ["name", "body", "author", "category"]  # можно в кортеже, можно "__all__"
+#
 # --------------------------------------------------------------------------------------
 # Lesson 5.
 # Methods save/update/create.

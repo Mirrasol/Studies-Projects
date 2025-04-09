@@ -16,11 +16,20 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from rest_framework import routers
+# from rest_framework import routers
 
 from drfsite import views
 from drfsite.articles.views import *
 
+
+urlpatterns = [
+    path('api/v1/articles/', ArticlesAPIList.as_view()),
+    path('api/v1/articles/<int:pk>/', ArticlesAPIUpdate.as_view()),
+    path('api/v1/articlesdelete/<int:pk>/', ArticlesAPIDestroy.as_view()),
+    path('admin/', admin.site.urls),
+]
+
+# ---------------------------------------------------------------------------------------
 # Lesson 9.
 # Custom router.
 # class MyCustomRouter(routers.SimpleRouter):
@@ -38,20 +47,20 @@ from drfsite.articles.views import *
 #     ]
 #
 # router = MyCustomRouter()
-
-router = routers.DefaultRouter()
-router.register(r'articles', ArticlesViewSet, basename='articles')  
-# basename задаст имя параметров (articles-list, articles-detail etc) вместо имени модели (article) 
-# => обязателен там, где нет qyeryset и не подставить модель автоматом
-print(router.urls)
-
-urlpatterns = [
-    path('', views.index),
-    path('api/v1/', include(router.urls)),
-    path('admin/', admin.site.urls),
-]
-
-# -----------------------------------------------------------------
+#
+# router = routers.DefaultRouter()
+# router.register(r'articles', ArticlesViewSet, basename='articles')  
+# # basename задаст имя параметров (articles-list, articles-detail etc) вместо имени модели (article) 
+# # => обязателен там, где нет qyeryset и не подставить модель автоматом
+# print(router.urls)
+#
+# urlpatterns = [
+#     path('', views.index),
+#     path('api/v1/', include(router.urls)),
+#     path('admin/', admin.site.urls),
+# ]
+#
+# ---------------------------------------------------------------------------------------
 # Lesson 8-1.
 # Без роутеров.
 # urlpatterns = [
@@ -60,7 +69,7 @@ urlpatterns = [
 #     path('api/v1/articleslist/<int:pk>/', ArticlesViewSet.as_view({'put': 'update'})),
 #     path('admin/', admin.site.urls),
 # ]
-#------------------------------------------------------------------
+#----------------------------------------------------------------------------------------
 # Lesson 7.
 # urlpatterns = [
 #     path('', views.index),
