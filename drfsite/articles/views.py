@@ -2,6 +2,7 @@
 from rest_framework import generics
 
 # from rest_framework import mixins, viewsets
+# from rest_framework.authentication import TokenAuthentication
 # from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
@@ -26,6 +27,7 @@ class ArticlesAPIUpdate(generics.RetrieveUpdateAPIView):
     queryset = Article.objects.all()
     serializer_class = ArticlesSerializer
     permission_classes = [CustomIsOwnerOrReadOnly]
+#    authentication_classes = [TokenAuthentication]
 
 
 class ArticlesAPIDestroy(generics.RetrieveDestroyAPIView):

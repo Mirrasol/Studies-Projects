@@ -17,6 +17,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path, re_path
 
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+    TokenVerifyView,
+)
 # from rest_framework import routers
 # from drfsite import views
 # from drfsite.articles.views import *
@@ -29,9 +34,33 @@ urlpatterns = [
     path('api/v1/articlesdelete/<int:pk>/', ArticlesAPIDestroy.as_view()),
     path('api/v1/auth/', include('djoser.urls')),  # Djoser
     re_path(r'^auth/', include('djoser.urls.authtoken')),  # Djoser
+    path('api/v1/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/v1/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('api/v1/token/verify/', TokenVerifyView.as_view(), name='token_verify'),
     path('admin/', admin.site.urls),
 ]
-
+# ----------------------------------------------------------------------------------------
+# Lesson 11-12.
+# Sessions and simple tokens.
+#
+# from django.contrib import admin
+# from django.urls import include, path, re_path
+#
+# # from rest_framework import routers
+# # from drfsite import views
+# # from drfsite.articles.views import *
+# from drfsite.articles.views import ArticlesAPIDestroy, ArticlesAPIList, ArticlesAPIUpdate
+#
+# urlpatterns = [
+#     path('api/v1/articles/', ArticlesAPIList.as_view()),
+# #    path('api/v1/drf-auth/', include('rest_framework.urls')),  # для сессий и кук
+#     path('api/v1/articles/<int:pk>/', ArticlesAPIUpdate.as_view()),
+#     path('api/v1/articlesdelete/<int:pk>/', ArticlesAPIDestroy.as_view()),
+#     path('api/v1/auth/', include('djoser.urls')),  # Djoser
+#     re_path(r'^auth/', include('djoser.urls.authtoken')),  # Djoser
+#     path('admin/', admin.site.urls),
+# ]
+#
 # ---------------------------------------------------------------------------------------
 # Lesson 9.
 # Custom router.
