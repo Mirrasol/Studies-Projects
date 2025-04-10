@@ -1,0 +1,61 @@
+services:
+  nginx:
+    image: nginx:latest
+    container_name: nginx-server
+    restart: always
+    networks:
+      - dbnet
+    expose:
+      - 8088
+    ports:
+      - "80:8088"
+    volumes:
+      - ./drfsite/static:/app/www/drfsite/static
+      - ./drfsite/media:/app/www/drfsite/media
+      - ./drfsite/logs:/app/www/drfsite/logs
+      - ./nginx:/etc/nginx/conf.d
+    depends_on:
+      - drfsite
+
+  drfsite:
+    build: ./drfsite
+    image: drfsite
+    container_name: drfsite
+    restart: always
+    command: "python manage.py runserver 0.0.0.0:8000"  # "gunicorn -c gunicorn.py drfsite.wsgi" for nginx
+    env_file:
+      - .env
+    links:
+      "postgres:dbps"
+    networks:
+      - dbnet
+    volumes:
+      - ./drfsite:/app/www/drfsite
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:17-alpine
+    container_name: postgres
+    volumes:
+      -postgres-data:/var/lib/postgresql/data/dbdata
+    environment:
+      - POSTGRES_DB=${DATABASE_NAME}
+      - POSTGRES_USER=${DATABASE_USERNAME}
+      - POSTGRES_PASSWORD=${DATABSE_PASSWORD}
+      - PGDATA: /var/lib/postgresql/data/dbdata
+    env-file:
+      - .env
+    ports:
+      - 5432:5432
+    networks:
+      - dbnet
+
+networks:
+  dbnet:
+    driver: bridge
+
+volumes:
+  postgres-data:
