@@ -1,6 +1,13 @@
-from flask import Flask, render_template, request, url_for
+from flask import (
+    Flask,
+    flash,
+    render_template,
+    request,
+    # url_for,
+)
 
 app = Flask(__name__)
+app.config['SECRET_KEY'] = 'veryverysecret'
 
 
 @app.route('/homepage')
@@ -22,6 +29,11 @@ def profile(username):
 @app.route('/contact', methods=['GET', 'POST'])
 def contact():
     if request.method == 'POST':
+        if '@' not in request.form['email']:
+            flash('Invalid email', category='danger')
+        else:
+            flash('Email has been sent!', category='success')
+
         print(request.form)
         print(request.form['email'])
         
