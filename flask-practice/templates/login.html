@@ -1,0 +1,22 @@
+{% extends "base_layout.html" %}
+
+{% block main %}
+
+    <div class="container-lg mt-3">
+    
+        <form action="/login" method="post">
+            <div class="mb-3">
+              <label for="username" class="form-label">Username</label>
+              <input type="name" class="form-control" name="username">
+              <div id="nameHelp" class="form-text">Can't wait to hear your name.</div>
+            </div>
+            <div class="mb-3">
+              <label for="password" class="form-label">Password</label>
+              <input type="password" class="form-control" name="password">
+            </div>
+
+            <button type="submit" class="btn btn" style="background-color: #d84e4e; color: white">Submit</button>
+          </form>
+    </div>
+
+{% endblock %}
