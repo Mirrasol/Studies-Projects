@@ -35,6 +35,23 @@ def login():
     
     return render_template('login.html', title='Login Time')
 
+# Ставим куки при логине
+# @app.route('/login')
+# def login():
+#     log = '' 
+#     if request.cookies.get('logged'):
+#         log = request.cookies.get('logged')
+    
+#     res = make_response(f'<h1>Authorization Form</h1><p>logged: {log}</p>')
+#     res.set_cookie('logged', 'yes', 30*24*3600)  # куки хранятся 30 дней тут
+#     return res
+
+@app.route('/logout')
+def logout():
+    res = make_response('<p>No longer authorized</p>')
+    res.set_cookie('logged', '', max_age=0)  # в нек.браузерах все равно не очищается, пока браузер не закроешь
+    return res
+
 
 @app.route('/profile/<path:username>')  # конвертеры для обозначения пути (int=только цифры, path=любые допустимые символы и слэш и тд)
 def profile(username):
