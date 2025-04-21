@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "Avito-Testing"
+version = "0.1.0"
+description = "A testing assignment for Avito"
+authors = ["Elena Dobruk <elena.dobruk@yandex.ru>"]
+readme = "README.md"
+classifiers = ["Topic :: Software Development"]
+packages = []
+
+[tool.poetry.dependencies]
+
+
+[tool.poetry.group.dev.dependencies]
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
