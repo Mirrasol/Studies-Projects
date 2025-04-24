@@ -3,18 +3,23 @@
 {% block main %}
 
     <div class="container-lg mt-3">
-      <h1>Login? Login!</h1>
+        <h1>Sign up and don't give up!</h1>
     
-        <form action="/login" method="post">
+        <form action="/register" method="post">
             <div class="mb-3">
               <label for="username" class="form-label">Username</label>
               <input type="name" class="form-control" name="username">
-              <div id="nameHelp" class="form-text">Can't wait to hear your name</div>
+              <div id="nameHelp" class="form-text">Can't wait to learn your name</div>
             </div>
             <div class="mb-3">
               <label for="password" class="form-label">Password</label>
-              <input type="password" class="form-control" name="password">
-              <div id="passwordHelp" class="form-text">Was it sophisticated and pretty?</div>
+              <input type="password" class="form-control" name="password1">
+              <div id="passwordHelp" class="form-text">Make it sophisticated and pretty</div>
+            </div>
+            <div class="mb-3">
+              <label for="password" class="form-label">Confirm Password</label>
+              <input type="password" class="form-control" name="password2">
+              <div id="passwordHelp" class="form-text">Repeat it, please!</div>
             </div>
             <div>
               <p><input type="checkbox" name="rememberme"> Remember Me</p>
@@ -23,9 +28,6 @@
             <button type="submit" class="btn btn" style="background-color: #d84e4e; color: white">Submit</button>
         </form>
 
-        <div class="container mt-3">
-          <a style="color: #9e3f3f" href="{{ url_for('register') }}">New here? Maybe register first!</a>
-        </div>
     </div>
 
 {% endblock %}

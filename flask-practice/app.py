@@ -9,6 +9,7 @@ from flask import (
     session,
     url_for,
 )
+from werkzeug.security import check_password_hash, generate_password_hash
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'veryverysecret'
@@ -25,14 +26,8 @@ def about():
     return render_template('about.html', title='About')
 
 
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    if 'userLogged' in session:
-        return redirect(url_for('profile', username=session['userLogged']))
-    elif request.method == 'POST' and request.form['username'] == 'owl' and request.form['password'] == '123':
-        session['userLogged'] = request.form['username']
-        return redirect(url_for('profile', username=session['userLogged']))
-    
+@app.route('/login')
+def login():    
     return render_template('login.html', title='Login Time')
 
 # Ставим куки при логине
@@ -51,6 +46,24 @@ def logout():
     res = make_response('<p>No longer authorized</p>')
     res.set_cookie('logged', '', max_age=0)  # в нек.браузерах все равно не очищается, пока браузер не закроешь
     return res
+
+
+# Для хеша паролей: из werkzeug generate_password_hash('1223') + check_password_hash(hash, '1223')
+@app.route('/register', methods=['GET', "POST"])
+def register():
+    if request.method == 'POST':
+        if len(request.form['username']) > 4 and len(request.form['password1']) > 4 \
+            and len(request.form['password2']) > 4 \
+            and request.form['password1'] == request.form['password2']:
+            hash = generate_password_hash(request.form['password1'])
+            result = 1  # какая-то наша логика добавки в бд
+            if result:
+                flash('User has been registered successfully', category='success')
+                return redirect(url_for('login'))
+            else:
+                flash('Oh my, some error occured while registering', category='danger')
+
+    return render_template('register.html', title='Welcome, welcome!')
 
 
 @app.route('/profile/<path:username>')  # конвертеры для обозначения пути (int=только цифры, path=любые допустимые символы и слэш и тд)

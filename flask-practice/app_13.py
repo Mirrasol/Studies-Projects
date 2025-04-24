@@ -1,4 +1,6 @@
 # Lesson 13: Sessions.
+# Работают как куки - сохраняются в браузере
+# Отличие от кук: шифруются секретным ключом, кот. указываем в конфиге
 from flask import Flask, session
 import datetime
 
