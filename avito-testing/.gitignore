@@ -13,6 +13,7 @@ coverage/
 test-coverage-tool
 coverage.xml
 *.sqlite3
+*.db
 htmlcov/
 .vscode/
 .idea/

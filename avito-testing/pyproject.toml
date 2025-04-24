@@ -1,18 +1,25 @@
-[tool.poetry]
-name = "Avito-Testing"
+[project]
+name = "advertisments"
 version = "0.1.0"
-description = "A testing assignment for Avito"
-authors = ["Elena Dobruk <elena.dobruk@yandex.ru>"]
+description = "A testing assignment for Avito, from Hexlet repository"
+authors = [
+    {name = "elena_dobruk",email = "elena.dobruk@yandex.ru"}
+]
 readme = "README.md"
-classifiers = ["Topic :: Software Development"]
-packages = []
+packages = [{include = "advertisments"}]
 
-[tool.poetry.dependencies]
-
-
-[tool.poetry.group.dev.dependencies]
+requires-python = ">=3.12"
+dependencies = [
+    "flask (>=3.1.0,<4.0.0)",
+    "flask-sqlalchemy (>=3.1.1,<4.0.0)",
+    "python-dotenv (>=1.1.0,<2.0.0)"
+]
 
 
 [build-system]
-requires = ["poetry-core"]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.11.6"
+
