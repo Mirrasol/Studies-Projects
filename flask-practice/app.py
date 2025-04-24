@@ -9,10 +9,23 @@ from flask import (
     session,
     url_for,
 )
+from flask_login import LoginManager, login_user, login_required
 from werkzeug.security import check_password_hash, generate_password_hash
+
+from .user_login import UserLogin
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'veryverysecret'
+
+db = {}
+
+login_manager = LoginManager(app)
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    print('load_user')
+    return UserLogin().fromDB(user_id, db)
 
 
 @app.route('/homepage')
@@ -25,6 +38,26 @@ def homepage():
 def about():
     return render_template('about.html', title='About')
 
+# Через логин менеджер:
+# @app.route('/login')
+# def login():
+#     if request.method == 'POST':
+#         user = db.getUserByName(request.form['username'])
+#         if user and check_password_hash(user['password1'], request.form['password1']):
+#             userlogin = UserLogin().create(user)
+#             login_user(userlogin)
+#             return redirect(url_for('homepage'))
+#
+#         flash('Wrong login info here!', category='danger')    
+#
+#     return render_template('login.html', title='Login Time')
+#
+#
+# @app.route('/secret_page')
+# @login_required  # cтавим для только авторизованных
+# def secret_page():
+#     pass
+
 
 @app.route('/login')
 def login():    
@@ -36,7 +69,7 @@ def login():
 #     log = '' 
 #     if request.cookies.get('logged'):
 #         log = request.cookies.get('logged')
-    
+#
 #     res = make_response(f'<h1>Authorization Form</h1><p>logged: {log}</p>')
 #     res.set_cookie('logged', 'yes', 30*24*3600)  # куки хранятся 30 дней тут
 #     return res
