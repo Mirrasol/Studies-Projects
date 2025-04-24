@@ -9,10 +9,15 @@ from flask import (
     session,
     url_for,
 )
-from flask_login import LoginManager, login_user, login_required
+from flask_login import (
+    current_user,
+    LoginManager,
+    login_required,
+    login_user,
+)
 from werkzeug.security import check_password_hash, generate_password_hash
 
-from .user_login import UserLogin
+from user_login import UserLogin
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'veryverysecret'
@@ -20,6 +25,9 @@ app.config['SECRET_KEY'] = 'veryverysecret'
 db = {}
 
 login_manager = LoginManager(app)
+login_manager.login_view = 'login'
+login_manager.login_message = 'Did you forget to login to browse this secret page?'
+login_manager.login_message_category = 'warning'
 
 
 @login_manager.user_loader
@@ -41,12 +49,16 @@ def about():
 # Через логин менеджер:
 # @app.route('/login')
 # def login():
+#     if current_user.is_authenticated:
+#     return redirect(url_for('profile'))
+#
 #     if request.method == 'POST':
 #         user = db.getUserByName(request.form['username'])
 #         if user and check_password_hash(user['password1'], request.form['password1']):
 #             userlogin = UserLogin().create(user)
-#             login_user(userlogin)
-#             return redirect(url_for('homepage'))
+#             rm = True if request.form.get('rememberme') else False
+#             login_user(userlogin, remember=rm)
+#             return redirect(request.args.get['next'] or url_for('profile'))
 #
 #         flash('Wrong login info here!', category='danger')    
 #
