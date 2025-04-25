@@ -1,4 +1,4 @@
-[project]
+[tool.poetry]
 name = "advertisments"
 version = "0.1.0"
 description = "A testing assignment for Avito, from Hexlet repository"
@@ -6,15 +6,17 @@ authors = [
     {name = "elena_dobruk",email = "elena.dobruk@yandex.ru"}
 ]
 readme = "README.md"
-packages = [{include = "advertisments"}]
+packages = [
+    { include = "api" },
+]
 
 requires-python = ">=3.12"
 dependencies = [
     "flask (>=3.1.0,<4.0.0)",
     "flask-sqlalchemy (>=3.1.1,<4.0.0)",
-    "python-dotenv (>=1.1.0,<2.0.0)"
+    "python-dotenv (>=1.1.0,<2.0.0)",
+    "pydantic (>=2.11.3,<3.0.0)"
 ]
-
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
