@@ -10,6 +10,8 @@ Special Symbols:
 
 `man <command>` = 'manual' (Q to exit)
 
+- general:
+
 `exit` = close terminal
 
 `clear` = clear terminal
@@ -19,8 +21,10 @@ Special Symbols:
 `Ctrl+E` = to line end
 
 `Ctrl+Z` = pause current process
- +fg = foreground
- +bg / +& = background
+
+! +fg = foreground
+
+! +bg / +& = background
 
 
 `pwd` = 'print working directory'
@@ -46,3 +50,75 @@ Special Symbols:
 
 
 `chmod +x file` = make file executable
+
+
+`cat file` = see files content
+
+`less file` = open file for read
+
+!    +q = exit
+
+!   +/ = search
+
+!    +g = to start
+
+!    +G = to end
+
+`nano file` = edit file
+    +Ctrl+X = exit
+
+- ins, outs and pipes:
+
+`program >out.txt` = redirect stdout
+`program 2>err.txt` = redirect stderr
+`program <in.txt` = redirect stdin
+`program &>file.txt` = redirect stdout + stderr
+
+!    > = rewrite file
+
+!    >> = add to file
+
+`progr1 | progr2 | ... | progrN` = pipe: stdout1 into stdin2, stdout2 into stdin3 etc
+
+- dowloads:
+
+`wget` = standard prog for Internet downloads
+
+- archiving:
+
+`zip archive.zip file1 file2` = zip multiple files
+`gzip file1` = zip 1 file and delete it, into file1.gz by default 
+
+`tar -cvf arch.tar f1 f2` = zip multiple files without compressing
+
+AND
+
+`gzip arch.tar` = zip tar archive into arch.tar.gz, delete arch.tar after
+
+! -v = info on screen (quiet without it)
+
+ALSO
+
+`tar -zcvf arch.tar f1 f2` = zip multiples with compress
+
+`unzip archive.zip` = unzip zip
+`gunzip archive.gz` = unzip gz and delete the .gz
+`tar -xvf arch.tar` / `tar -zxvf arch.tar.gz` = unzip
+
+ALSO `bzip2` / `bunzip2` (with .tar)
+
+- searching:
+
+`find dir1 -name "file1"` = find file1 in dir1 (or in current dir)
+
+! - works with ~/./*/?
+
+`grep "line1" file1` = find smth in file1
+
+`grep -c "line1" file1` = count lines with line1 in file1
+
+`grep -r "line1" dir1` = find line1 in dir
+
+! --color = to color those line1
+
+! -h = don't show the path to the file
