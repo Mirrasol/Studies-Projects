@@ -10,4 +10,4 @@ A collection of repos and projects for studying practices from various courses a
 
 3) `"avito-testing"`: an old testing assignment for Avito, provided by Hexlet;
 
-4) `linux-admin`: a basic Linux administration course, from Stepik;
+4) `"linux-admin"`: a basic Linux administration course, from Stepik;
