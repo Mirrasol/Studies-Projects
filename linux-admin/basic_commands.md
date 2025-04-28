@@ -122,3 +122,15 @@ ALSO `bzip2` / `bunzip2` (with .tar)
 ! --color = to color those line1
 
 ! -h = don't show the path to the file
+
+- install apps:
+
+`sudo apt-get install program` = install
+
+`sudo apt-get remove program` = remove
+
+`sudo apt-get update` = update package links
+
+`sudo apt-get upgrade` = update installed packages
+
+`sudo apt-get install --only-upgrade program` = update just the program
