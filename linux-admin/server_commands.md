@@ -36,3 +36,11 @@
 `kill pid` = finish process
 
 `kill -9 pid` = kill process (use caution!)
+
+- multithreading:
+
+`free -g` = info about RAM
+
+`nproc` = number of cores
+
+`lscpu` = general info

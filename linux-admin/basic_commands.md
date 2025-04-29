@@ -1,14 +1,30 @@
 `команда --опции аргументы` = общий вид комманд
 
 Special Symbols:
-- [.] = current dir
-- [..] = parent dir
-- [~] = home dir
-- [*] = any number of symbols
-- [?] = exactly one symbol
 
+    [.] = current dir
+    [..] = parent dir
+    [~] = home dir
+    [*] = any number of symbols
+    [?] = exactly one symbol
 
 `man <command>` = 'manual' (Q to exit)
+
+- terminal commands:
+
+ `Ctrl + Shift + T` = new tab
+
+ `Alt + number` = switch to the specific tab
+
+ `Ctrl + Shift + W` = close current tab
+
+- PC specifications:
+
+`free -g` = info about RAM
+
+`nproc` = number of cores
+
+`lscpu` = general info
 
 - general:
 
