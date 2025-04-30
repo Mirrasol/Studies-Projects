@@ -110,3 +110,36 @@
     some_actions_for_True
     done
 
+- арифметика:
+
+`let "var = expression"` / `let var=1+1` => можно без кавычек, если нет пробелов
+
+- внешние программы:
+
+    var=\`bash_programm\`
+
+`$?` = check returning code (0 = success)
+
+`exit [code]` = exit and execute some code
+
+    if `bash_code`
+    then
+      some_actions_if_0
+    else
+      some_actions_if_not_0
+    fi
+
+-  функции:
+
+1)
+
+    func_name () 
+    {
+        some_actions
+        var_global=1
+        local var_local=2
+    }
+
+2)
+
+    func_name () { action1; action2; }
