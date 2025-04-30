@@ -47,11 +47,12 @@ Special Symbols:
 
 `ls` = 'list directory content'
 `ls -l -h` = +list view, +size in KB/MB
+`ls --sort=[sort_type] -l .` = with sorting (specified, ex. size, time)
 
-`mkdir path_to_dir` = create dir
+`mkdir path_to_dir` / `mkdir ./{dir1,dir2,dir3}` = create dir
 `mkdir -p path_to_dir` = +parents
 
-`touch path_to_file` = create file
+`touch path_to_file` / `touch ~/{file1,file2}.txt` = create file
 
 `cd path_to_file` = enter dir
 
@@ -94,6 +95,8 @@ Special Symbols:
 
 !    >> = add to file
 
+`/dev/null` = redirect nowhere
+
 `progr1 | progr2 | ... | progrN` = pipe: stdout1 into stdin2, stdout2 into stdin3 etc
 
 - dowloads:
@@ -129,6 +132,9 @@ ALSO `bzip2` / `bunzip2` (with .tar)
 
 ! - works with ~/./*/?
 
+`find -iname filename` = without register
+
+
 `grep "line1" file1` = find smth in file1
 
 `grep -c "line1" file1` = count lines with line1 in file1
@@ -138,6 +144,8 @@ ALSO `bzip2` / `bunzip2` (with .tar)
 ! --color = to color those line1
 
 ! -h = don't show the path to the file
+
+`grep -E "regexp"` = find some regexps
 
 - install apps:
 
@@ -150,3 +158,38 @@ ALSO `bzip2` / `bunzip2` (with .tar)
 `sudo apt-get upgrade` = update installed packages
 
 `sudo apt-get install --only-upgrade program` = update just the program
+
+- permissions:
+
+`users` = check all users
+
+`groups` = check all groups
+
+`ls -l path_to_file` = all permissions/groups for a file/dir
+
+`chmod [ugoa][+-][rwx] path_to_file` = change permissions
+
+`chown new_user:new_group path` = change ownership (can enter only user / only :new_group)
+
+`sudo` = make smth from root
+
+- misc. commands:
+
+`wc -l path` = lines count
+`wc -w path` = words count
+`wc -c path` = bytes count
+
+`diff [-q -r] path1 path2` = show diff between p1 and p2
+`diff path1 path2 | less` = open diff in less editor
+`-q` = don't show the diff itself, just tell if diff exists
+`-r` = recursive for dirs
+
+`du [--max-depth <depth> -h] path` = how nuch space is occupied on disk
+
+`df [-h]` = how much is occupied in all disks, the entire system
+
+`head [-n <lines amount>] path` = show lines from the start of the file
+`tail [-n <lines amount>] path` = show lines from the end of the file
+
+`sed 'instruction' file` / `cat filename | sed 'instruction'` = потоковый редактор (читает файл в stdin, обрабатывает по инструкции, пишет в stdout)
+`-i` / `--in-name` = rewrite the file
