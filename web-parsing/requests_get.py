@@ -1,5 +1,6 @@
 import random
 import requests
+import time
 
 # response1 = requests.get('https://www.example.com')
 # print(response1.text)
@@ -88,6 +89,47 @@ print(response.text)
 # В реальных парсерах, которые делают много запросов, стоит также 
 # добавлять задержки между запросами time.sleep(random.uniform(1, 5))
 # и использовать прокси-серверы для смены IP-адреса.
+
+
+# Имитируем ошибку от прокси-сервера и таймаут
+
+url = 'http://httpbin.org/get'
+
+proxies = {
+    'http': 'http://200.12.55.90:80',
+    'https': 'http://200.12.55.90:80'
+}
+start = time.perf_counter()
+try:
+    requests.get(url=url, proxies=proxies, timeout=1)
+except requests.exceptions.ProxyError as e:
+    print(f'wait time = {time.perf_counter() - start}')
+
+
+
+# Грузим маленький файл
+
+# Выполняем GET-запрос к указанному URL с параметром stream=True.
+# Параметр stream=True гарантирует, что соединение будет удерживаться,
+# пока не будут получены все данные.
+response = requests.get(url=url, stream=True)
+
+# Открываем (или создаем) файл 'file.mp4' в режиме 'wb' (write binary),
+# чтобы сохранить в него бинарные данные.
+with open('file.mp4', 'wb') as file:
+
+    # Записываем содержимое ответа (response.content) в файл.
+    # Этот метод подходит для относительно небольших файлов,
+    # так как все содержимое файла сначала загружается в оперативную память.
+    file.write(response.content)
+
+
+# Грузим большой файл, кусками
+
+response = requests.get(url=url, stream=True)
+with open('file.mp4', 'wb') as video:
+    for piece in response.iter_content(chunk_size=100000):
+        video.write(piece)
 
 
 # def main():
