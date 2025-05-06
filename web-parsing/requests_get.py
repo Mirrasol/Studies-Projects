@@ -2,12 +2,9 @@ import random
 import requests
 import time
 
-# response1 = requests.get('https://www.example.com')
-# print(response1.text)
-
+# 1. General Info.
 url='http://httpbin.org/'
 
-# Выполняем GET-запрос
 response = requests.get(url)
 
 # status_code: HTTP-код статуса ответа.
@@ -48,7 +45,7 @@ print("Запрос успешен (коды 2xx):", response.ok)
 print("Сообщение статуса HTTP:", response.reason)
 
 
-# Маскируем Юзер-Агент
+# 2. Маскируем Юзер-Агент
 
 url = 'http://httpbin.org/user-agent'
 
@@ -62,24 +59,20 @@ print("Отправленные заголовки (User-Agent):")
 print(response.json().get('user-agent')) 
 
 
-# Ротация Юзер-Агента
+# 3. Ротация Юзер-Агента
 
 url = 'http://httpbin.org/user-agent'
 
-# --- Шаг 1: Чтение User-Agent'ов из файла ---
+# Чтение User-Agent'ов из файла
 with open('user_agent.txt') as file:
     # Читаем все строки, убираем пустые строки и пробелы по краям
     user_agents_list = [line.strip() for line in file if line.strip()]
 
-
-# --- Шаг 2: Выбор случайного User-Agent ---
-random_user_agent = random.choice(user_agents_list)
+random_user_agent = random.choice(user_agents_list)  # Выбор случайного User-Agent
 print(f"Выбран случайный User-Agent: {random_user_agent}")
 
-# --- Шаг 3: Формирование заголовков ---
 headers = {'User-Agent': random_user_agent}
 
-# --- Шаг 4: Выполнение запроса ---
 response = requests.get(url=url, headers=headers)
 response.raise_for_status() # Проверка на HTTP ошибки (4xx, 5xx)
 
@@ -91,7 +84,7 @@ print(response.text)
 # и использовать прокси-серверы для смены IP-адреса.
 
 
-# Имитируем ошибку от прокси-сервера и таймаут
+# 4. Имитируем ошибку от прокси-сервера и таймаут
 
 url = 'http://httpbin.org/get'
 
@@ -106,8 +99,7 @@ except requests.exceptions.ProxyError as e:
     print(f'wait time = {time.perf_counter() - start}')
 
 
-
-# Грузим маленький файл
+# 5.1 Грузим маленький файл
 
 # Выполняем GET-запрос к указанному URL с параметром stream=True.
 # Параметр stream=True гарантирует, что соединение будет удерживаться,
@@ -124,7 +116,7 @@ with open('file.mp4', 'wb') as file:
     file.write(response.content)
 
 
-# Грузим большой файл, кусками
+# 5.2 Грузим большой файл, кусками
 
 response = requests.get(url=url, stream=True)
 with open('file.mp4', 'wb') as video:
@@ -132,9 +124,65 @@ with open('file.mp4', 'wb') as video:
         video.write(piece)
 
 
-# def main():
-#     pass
+# 6. Используем параметры
+
+import requests
+
+API_KEY = "7e04c92c44b1421d94b113151250604"
+
+BASE_URL = "http://api.weatherapi.com/v1/current.json"
+
+params = {
+    "key": API_KEY,     # API-ключ
+    "q": "Moscow",      # Город
+    "lang": "ru"        # Язык ответа — русский
+}
+
+response = requests.get(BASE_URL, params=params)
+
+if response.status_code == 200:
+    data = response.json()
+    print(data)
 
 
-# if __name__ == "__main__":
-#     main()
+# 7. Proxies
+# Функция для выполнения запроса с использованием прокси
+def make_request(url, proxy):
+    try:
+        response = requests.get(url=url, proxies=proxy)
+        print(response.json())
+    except Exception as e:
+        print(f"Ошибка: {e}")
+
+# URL для тестирования прокси
+url = 'http://httpbin.org/ip'
+
+# Прокси для HTTP и HTTPS
+proxy_http_https = {
+    'http': 'http://103.177.45.3:80',
+    'https': 'https://103.177.45.3:80',
+}
+make_request(url, proxy_http_https)
+
+# Прокси для SOCKS4
+proxy_socks4 = {
+    'http': 'socks4://103.177.45.3:80',
+    'https': 'socks4://103.177.45.3:80',
+}
+make_request(url, proxy_socks4)
+
+# Прокси для SOCKS5
+proxy_socks5 = {
+    'http': 'socks5://103.177.45.3:80',
+    'https': 'socks5://103.177.45.3:80',
+}
+make_request(url, proxy_socks5)
+
+# Если ваш прокси-сервер требует логин и пароль, укажите их прямо в URL прокси:
+
+# Прокси с авторизацией
+proxy_with_auth = {
+    'http': 'socks5://login:password@103.177.45.3:8000',
+    'https': 'socks5://login:password@103.177.45.3:8000',
+}
+make_request(url, proxy_with_auth)
