@@ -13,3 +13,5 @@ A collection of repos and projects for studying practices from various courses a
 4) `"linux-admin"`: a basic Linux administration course, from Stepik;
 
 5) `web-parsing`: a general parsing course, from Stepik; 
+
+6) `sqlalchemy-webinar`: a webinar with a quick tutorial about SQLAlchemy, from Hexlet;
