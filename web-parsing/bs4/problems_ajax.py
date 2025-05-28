@@ -32,4 +32,6 @@ data = {
     'Direction': '0',
 }
 
+result = 0
+
 response = requests.get(url=url, params=data)
