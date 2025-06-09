@@ -3,6 +3,7 @@ import asyncio
 import time
 from bs4 import BeautifulSoup
 
+
 # 1. Soup 1.
 async def main():
     url = 'https://parsinger.ru/html/index1_page_1.html'

@@ -9,8 +9,11 @@ readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
     "aiohttp>=3.12.9",
+    "aiohttp-retry>=2.9.1",
+    "aiohttp-socks>=0.10.1",
     "bs4>=0.0.2",
     "codetiming>=1.4.0",
+    "fake-useragent>=2.2.0",
     "fastapi>=0.115.12",
     "flask>=3.1.0",
     "flask-login>=0.6.3",
