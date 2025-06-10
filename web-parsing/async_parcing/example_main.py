@@ -76,5 +76,4 @@ soup = get_soup(url)
 get_urls_categories(soup)
 get_urls_pages(category_lst)
 
-asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 asyncio.run(main())
