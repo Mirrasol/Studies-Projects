@@ -38,3 +38,19 @@ with webdriver.Chrome() as browser:
 
 # 4. ActionChains
 url = 'https://parsinger.ru/selenium/5.6/3/index.html'
+
+# 5. Field Clear
+url = 'https://parsinger.ru/selenium/5.5/1/1.html'
+
+with webdriver.Chrome() as browser:
+    browser.get(url)
+
+    fields = browser.find_elements(By.CLASS_NAME, 'text-field')
+    for field in fields:
+        field.clear()
+
+    browser.find_element('tag name', 'button').click()
+
+    alert = browser.switch_to.alert
+    alert_text = alert.text
+    print(alert_text)
