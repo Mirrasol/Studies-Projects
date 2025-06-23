@@ -12,3 +12,6 @@ avito-dev:
 
 avito-lint:
 	uv run ruff check avito-testing
+
+fast-run:
+	uv run uvicorn fastapi-course.main:app --reload

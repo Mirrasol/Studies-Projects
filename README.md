@@ -17,3 +17,5 @@ A collection of repos and projects for studying practices from various courses a
 6) `"sqlalchemy-webinar"`: a webinar with a quick tutorial about SQLAlchemy, from Hexlet;
 
 7) `"async-workshop"`: a webinar about asyncio basics, from Hexlet;
+
+8) `"fastapi-course"`: a conspect of misc practices from a favourite FastApi course, Stepik;
